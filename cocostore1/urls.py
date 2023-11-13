@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from home.views import homepage, contact
+from home.views import homepage, contact, about
 from shop.views import detail_product, detail_categories
 
 urlpatterns = [
     path('', homepage, name='homepage'),
     path('contact/', contact, name='contact'),
+    path('about/', about, name='about'),
     path('<slug:category_slug>/<slug:slug>/', detail_product, name='detail_product'),
     path('<slug:slug>/', detail_categories, name='detail_categories'),
     path('admin/', admin.site.urls),
