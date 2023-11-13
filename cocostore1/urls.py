@@ -17,9 +17,12 @@ from django.contrib import admin
 from django.urls import path
 
 from home.views import homepage, contact
+from shop.views import detail_product, detail_categories
 
 urlpatterns = [
     path('', homepage, name='homepage'),
     path('contact/', contact, name='contact'),
+    path('<slug:category_slug>/<slug:slug>/', detail_product, name='detail_product'),
+    path('<slug:slug>/', detail_categories, name='detail_categories'),
     path('admin/', admin.site.urls),
 ]

@@ -1,8 +1,17 @@
 from django.shortcuts import render
 
+from shop.models import Product
+
 # Create your views here.
 def homepage(request):
-    return render(request, 'home/homepage.html')
+    products = Product.objects.all()
+
+    context = {
+        'products': products
+    }
+
+    return render(request, 'home/homepage.html', context)
+   
 
 
 def contact(request):
