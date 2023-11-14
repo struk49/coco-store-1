@@ -1,12 +1,12 @@
 {% extends 'home/base.html' %}
 
-{% block title %}{{ product.title }} |{% endblock %}
+{% block title %}{{ item.title }} |{% endblock %}
 
 {% block content %}
-    <h1 class="title">{{ product.title }}</h1>
-    <h2 class="subtitle">Price</h2>
+    <h1 class="title">{{ item.title }}</h1>
+    <h2 class="subtitle">{{ item.price }}</h2>
 
-    {% if product.description %}
-        <p>{{ product.description }}</p>
+    {% if item.description %}
+        <p>{{ item.description }}</p>
     {% endif %}
 {% endblock %}

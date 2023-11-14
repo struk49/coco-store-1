@@ -1,13 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 
-from .models import Product, Category
+from .models import Item, Category
 
 # Create your views here.
 def detail_product(request, category_slug, slug):
-    product = get_object_or_404(Product, slug=slug)
+    item = get_object_or_404(Item, slug=slug)
 
     context = {
-        'product': product
+        'item': item
     }
 
     return render(request, 'shop/detail_products.html', context)
@@ -15,11 +15,11 @@ def detail_product(request, category_slug, slug):
 
 def detail_categories(request, slug):
     category = get_object_or_404(Category, slug=slug)
-    products = category.products.all()
+    items = category.items.all()
 
     context = {
         'category': category,
-        'products': products,
+        'items': items,
     }
 
     return render(request, 'shop/detail_category.html', context)

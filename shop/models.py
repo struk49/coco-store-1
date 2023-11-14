@@ -16,12 +16,13 @@ class Category(models.Model):
         return self.title
 
 
-class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
+class Item(models.Model):
+    category = models.ForeignKey(Category, related_name='items', on_delete=models.CASCADE)
     title = models.CharField(max_length=254)
     slug = models.SlugField(max_length=254)
     description = models.TextField(blank=True, null=True)
-    is_featured = models.BooleanField(default=False)
+    featured_item = models.BooleanField(default=False)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
    
     
     def __str__(self):

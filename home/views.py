@@ -1,13 +1,13 @@
 from django.shortcuts import render
 
-from shop.models import Product
+from shop.models import Item
 
 # Create your views here.
 def homepage(request):
-    products = Product.objects.filter(is_featured=True)
+    items = Item.objects.filter(featured_item=True)
 
     context = {
-        'products': products
+        'items': items
     }
 
     return render(request, 'home/homepage.html', context)
