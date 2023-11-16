@@ -16,16 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from bag.views import bag
+from bag.views import bag_detail
 from home.views import homepage, contact, about
 from shop.views import detail_product, detail_categories
+from shop.api import api_add_to_bag
 
 urlpatterns = [
     path('', homepage, name='homepage'),
-    path('bag/', bag, name='bag'),
+    path('bag/', bag_detail, name='bag'),
     path('contact/', contact, name='contact'),
     path('about/', about, name='about'),
     path('admin/', admin.site.urls),
+
+#api
+    path('api/add_to_bag', api_add_to_bag, name='api_add_to_bag'),
+
+
+#shop
+
     path('<slug:category_slug>/<slug:slug>/', detail_product, name='detail_product'),
     path('<slug:slug>/', detail_categories, name='detail_categories'),
 ]
