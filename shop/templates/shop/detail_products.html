@@ -3,16 +3,72 @@
 {% block title %}{{ item.title }} |{% endblock %}
 
 {% block content %}
+    <div id="itemapp">
     <h1 class="title">{{ item.title }}</h1>
     <h2 class="subtitle">{{ item.price }}</h2>
 
     {% if item.description %}
         <p>{{ item.description }}</p>
     {% endif %}
+    <button @Click="addtobag{{ item.id }}">Add to shopping bag</button>
+    </div>
 {% endblock %}
 
-{% block scripte %}
+{% block scripts %}
 <script>
-    console.log('script');
+    var productapp = new Vue({
+        el: '#productapp',
+        delimeters: ['[[', ']]'],
+        store: store,
+        data () {
+            return {
+                showMessage: false,
+                mainImage: '{{ product.image.url }}',
+                images: [{{ imagesstring|safe }}]
+            }
+        },
+        mounted() {
+            console.log('Mounted');
+        },
+        methods: {
+            changeMainImage(image) {
+                this.mainImage = image;
+            },
+            addToCart(product_id) {
+                console.log('Product_id:', product_id);
+
+                var data = {
+                    'product_id': product_id, 
+                    'update': false,
+                    'quantity': 1
+                };
+                    
+                fetch('/api/add_to_cart/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(data)
+                })
+                .then((response) => {
+                    console.log(response)
+
+                    this.showMessage = true
+
+                    store.commit('increment', 1);
+
+                    setTimeout(() => {
+                        this.showMessage = false
+                    }, 2000)
+                })
+                .catch(function (error) {
+                    console.log('Error 2');
+                    console.log(error);
+                })
+            }
+        }
+    });
 </script>
 {% endblock %}

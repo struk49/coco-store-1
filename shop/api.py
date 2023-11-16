@@ -1,3 +1,4 @@
+import json
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
@@ -7,18 +8,19 @@ from .models import Item
 
 
 def api_add_to_bag(request):
+    data = json.loads(request.body)
     jsonresponse = {'success': True}
-    item_id = request.POST.get('item_id')
-    update = request.POST.get('update')
-    quantity = request.POST.get('quantity', 1)
+    item_id = data['item_id']
+    update = data['update']
+    quantity = data['quantity']
 
     bag = Bag(request)
 
     item = get_object_or_404(Item, pk=item_id)
 
     if not update:
-        bag.add(item=item, quantity=1, update_quantity=False)
+        bag.add(itemt=itemt, quantity=1, update_quantity=False)
     else:
-        bag.add(item=item, quantity=quantity, update_quantity=True)
-
-        return JsonResponse(jsonresponse)
+        bag.add(itemt=item, quantity=quantity, update_quantity=True)
+    
+    return JsonResponse(jsonresponse)
